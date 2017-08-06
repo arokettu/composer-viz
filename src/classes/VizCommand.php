@@ -40,6 +40,7 @@ class VizCommand extends Command
         $this->addOption('no-dev',      null,   InputOption::VALUE_NONE,        'Ignore development dependencies');
         $this->addOption('no-php',      null,   InputOption::VALUE_NONE,        'Ignore PHP dependencies');
         $this->addOption('no-ext',      null,   InputOption::VALUE_NONE,        'Ignore PHP extension dependencies');
+        $this->addOption('no-platform', null,   InputOption::VALUE_NONE,        '--no-php and --no-ext');
 
         $this->addOption('no-pkg-versions', null,   InputOption::VALUE_NONE,    'Do not render version labels on vertices');
         $this->addOption('no-dep-versions', null,   InputOption::VALUE_NONE,    'Do not render version labels on arrows');
@@ -51,8 +52,9 @@ class VizCommand extends Command
         $path   = $input->getOption('path');
         $noDev  = $input->getOption('no-dev');
 
-        $this->noExt = $input->getOption('no-ext');
-        $this->noPHP = $input->getOption('no-php');
+        $noPlatform  = $input->getOption('no-platform');
+        $this->noExt = $noPlatform || $input->getOption('no-ext');
+        $this->noPHP = $noPlatform || $input->getOption('no-php');
 
         $format     = $input->getOption('format');
         $outFile    = $input->getOption('output');
@@ -71,7 +73,7 @@ class VizCommand extends Command
         $this->graph = new Graph();
 
         $this->processPackageData($dataComposerJson, !$noDev);
-        $this->processLockFile($dataComposerLock);
+        $this->processLockFile($dataComposerLock, !$noDev);
 
         $viz = new GraphViz();
 
@@ -158,10 +160,16 @@ class VizCommand extends Command
         }
     }
 
-    private function processLockFile($dataComposerLock)
+    private function processLockFile($dataComposerLock, $dev)
     {
         foreach ($dataComposerLock['packages'] as $package) {
             $this->processPackageData($package, false);
+        }
+
+        if ($dev) {
+            foreach ($dataComposerLock['packages-dev'] as $package) {
+                $this->processPackageData($package, false);
+            }
         }
     }
 
