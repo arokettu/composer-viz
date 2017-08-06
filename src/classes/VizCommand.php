@@ -72,7 +72,7 @@ class VizCommand extends Command
 
         $this->graph = new Graph();
 
-        $this->processPackageData($dataComposerJson, !$noDev);
+        $this->processPackageData($dataComposerJson, !$noDev, false);
         $this->processLockFile($dataComposerLock, !$noDev);
 
         $viz = new GraphViz();
@@ -104,7 +104,12 @@ class VizCommand extends Command
         return $jsonData;
     }
 
-    private function processPackageData($data, $includeDev)
+    /**
+     * @param array $data
+     * @param bool $includeDev  include development dependencies
+     * @param bool $asDev       treat as development
+     */
+    private function processPackageData($data, $includeDev, $asDev)
     {
         $rootPackage = $data['name'];
 
@@ -121,7 +126,7 @@ class VizCommand extends Command
                 }
 
                 $packageVertex = $this->getVertex($package);
-                $this->buildEdge($rootVertex, $packageVertex, $version, false);
+                $this->buildEdge($rootVertex, $packageVertex, $version, $asDev);
             }
         }
 
@@ -163,12 +168,12 @@ class VizCommand extends Command
     private function processLockFile($dataComposerLock, $dev)
     {
         foreach ($dataComposerLock['packages'] as $package) {
-            $this->processPackageData($package, false);
+            $this->processPackageData($package, false, false);
         }
 
         if ($dev) {
             foreach ($dataComposerLock['packages-dev'] as $package) {
-                $this->processPackageData($package, false);
+                $this->processPackageData($package, false, true);
             }
         }
     }
