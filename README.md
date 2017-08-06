@@ -4,7 +4,7 @@ A CLI tool to generate dependency graph by GraphViz inspired by `bundle viz`
 
 ## Usage
 
-```bash
+```
 composer-viz [-d|--path PATH] [-o|--output OUTPUT] [-f|--format FORMAT] 
              [--no-dev] [--no-php] [--no-ext] [--no-platform] 
              [--no-pkg-versions] [--no-dep-versions] [--no-versions]
@@ -31,7 +31,7 @@ sudo apt-get install graphviz
 ````
 
 Sometimes you may need additional packages like in Fedora you should also install ``graphviz-gd`` to be able
-to export images, like this
+to export images, like this:
 ````bash
 # dot, svg and postscript work without graphviz-gd but png, jpeg and gif don't
 sudo dnf install graphviz graphviz-gd
