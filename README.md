@@ -6,6 +6,12 @@
 
 A CLI tool to generate dependency graph by GraphViz inspired by `bundle viz`
 
+## Example
+
+Running composer-viz 1.0.0 for itself: `composer-viz --output=composer-viz-1.0.0.svg`
+
+![selfie](doc/composer-viz-1.0.0.svg)
+
 ## Usage
 
 ```
