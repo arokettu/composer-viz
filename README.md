@@ -3,6 +3,7 @@
 [![Packagist](https://img.shields.io/packagist/v/sandfoxme/composer-viz.svg?maxAge=2592000)](https://packagist.org/packages/sandfoxme/composer-viz)
 [![Packagist](https://img.shields.io/packagist/l/sandfoxme/composer-viz.svg?maxAge=2592000)](https://opensource.org/licenses/MIT)
 [![Code Climate](https://img.shields.io/codeclimate/github/sandfoxme/composer-viz.svg?maxAge=2592000)](https://codeclimate.com/github/sandfoxme/composer-viz)
+[![Dependency Status](https://img.shields.io/gemnasium/sandfoxme/composer-viz.svg?maxAge=2592000)](https://gemnasium.com/github.com/sandfoxme/composer-viz)
 
 A CLI tool to generate dependency graph by GraphViz inspired by `bundle viz`
 
