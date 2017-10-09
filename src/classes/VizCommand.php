@@ -49,7 +49,7 @@ class VizCommand extends BaseCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $path   = $input->getOption('path');
+        $path   = $input->getOption('working-dir') ?: getcwd();
         $noDev  = $input->getOption('no-dev');
 
         $noPlatform  = $input->getOption('no-platform');
