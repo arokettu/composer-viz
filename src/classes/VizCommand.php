@@ -33,7 +33,7 @@ class VizCommand extends BaseCommand
         $this->setName('viz');
         $this->setDescription('Generate a GraphViz representation of the dependency graph');
 
-        $this->addOption('path',        'd',    InputOption::VALUE_REQUIRED,    'Path to composer.json and composer.lock', getcwd());
+//        $this->addOption('path',        'd',    InputOption::VALUE_REQUIRED,    'Path to composer.json and composer.lock', getcwd());
         $this->addOption('output',      'o',    InputOption::VALUE_REQUIRED,    'Output file');
         $this->addOption('format',      'f',    InputOption::VALUE_REQUIRED,    'Output file format');
 
