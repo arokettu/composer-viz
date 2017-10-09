@@ -1,6 +1,6 @@
 {
     "name": "sandfoxme/composer-viz",
-    "type": "project",
+    "type": "composer-plugin",
     "description": "Generate a GraphViz representation of the dependency graph",
     "keywords": [
         "graph",
@@ -20,11 +20,15 @@
             "SandFoxMe\\ComposerViz\\": "src/classes"
         }
     },
+    "extra": {
+        "class": "SandFoxMe\\ComposerViz\\VizPlugin"
+    },
     "require": {
-        "graphp/graphviz": "~0.2.0",
-        "symfony/console": "^3.2"
+        "composer-plugin-api":  "^1.1",
+        "graphp/graphviz":      "~0.2.0"
     },
     "require-dev": {
+        "composer/composer":            "~1.5",
         "indeyets/pake":                "~1.99",
         "secondtruth/phar-compiler":    "~1.1"
     },

@@ -2,16 +2,16 @@
 
 namespace SandFoxMe\ComposerViz;
 
+use Composer\Command\BaseCommand;
 use Fhaculty\Graph\Graph;
 use Fhaculty\Graph\Vertex;
 use Graphp\GraphViz\GraphViz;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class VizCommand extends Command
+class VizCommand extends BaseCommand
 {
     /**
      * @var Graph
@@ -30,7 +30,7 @@ class VizCommand extends Command
 
     protected function configure()
     {
-        $this->setName('composer-viz');
+        $this->setName('viz');
         $this->setDescription('Generate a GraphViz representation of the dependency graph');
 
         $this->addOption('path',        'd',    InputOption::VALUE_REQUIRED,    'Path to composer.json and composer.lock', getcwd());
