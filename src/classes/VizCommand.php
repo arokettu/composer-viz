@@ -64,10 +64,6 @@ class VizCommand extends BaseCommand
         $dataComposerJson = $this->getComposer()->getPackage();
         $dataComposerLock = $this->getComposer()->getLocker()->getLockData();
 
-        if (empty($dataComposerJson['name'])) {
-            $dataComposerJson['name'] = 'Project';
-        }
-
         $this->graph = new Graph();
 
         $this->processPackageData($dataComposerJson, !$noDev, false);
@@ -97,7 +93,7 @@ class VizCommand extends BaseCommand
         $rootVertex = $this->getVertex($rootPackage);
 
         if (!$this->noVertexVersions && !empty($package->getVersion())) {
-            $rootVertex->setAttribute('graphviz.label', "{$rootPackage}: {$package->getVersion()}");
+            $rootVertex->setAttribute('graphviz.label', "{$rootPackage}: {$package->getPrettyVersion()}");
         }
 
         foreach ($package->getRequires() as $link) {
@@ -107,7 +103,7 @@ class VizCommand extends BaseCommand
                 continue;
             }
 
-            $constraint = $link->getConstraint();
+            $constraint = $link->getPrettyConstraint();
 
             $packageVertex = $this->getVertex($target);
             $this->buildEdge($rootVertex, $packageVertex, $constraint, $asDev);
@@ -121,7 +117,7 @@ class VizCommand extends BaseCommand
                     continue;
                 }
 
-                $constraint = $link->getConstraint();
+                $constraint = $link->getPrettyConstraint();
 
                 $packageVertex = $this->getVertex($target);
                 $this->buildEdge($rootVertex, $packageVertex, $constraint, true);
@@ -157,12 +153,12 @@ class VizCommand extends BaseCommand
         $localRepo = $this->getComposer()->getRepositoryManager()->getLocalRepository();
 
         foreach ($dataComposerLock['packages'] as $package) {
-            $this->processPackageData($localRepo->findPackage($package['name']), false, false);
+            $this->processPackageData($localRepo->findPackage($package['name'], '*'), false, false);
         }
 
         if ($dev) {
             foreach ($dataComposerLock['packages-dev'] as $package) {
-                $this->processPackageData($localRepo->findPackage($package['name']), false, true);
+                $this->processPackageData($localRepo->findPackage($package['name'], '*'), false, true);
             }
         }
     }
