@@ -6,7 +6,8 @@
         "graph",
         "graphviz",
         "composer",
-        "dependencies"
+        "dependencies",
+        "composer plugin"
     ],
     "license": "MIT",
     "authors": [
