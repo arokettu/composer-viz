@@ -18,9 +18,9 @@ composer global require sandfoxme/composer-viz:^2.0
 
 ## Example
 
-Running composer-viz 1.0.0 for itself: `composer-viz --output=composer-viz-1.0.0.svg`
+Running composer-viz 2.0.0 for itself: `composer viz --output=composer-viz-2.0.0.svg`
 
-![selfie](https://sandfoxme.github.io/composer-viz/composer-viz-1.0.0.svg)
+![selfie](https://sandfoxme.github.io/composer-viz/composer-viz-2.0.0.svg)
 
 ## Usage
 
