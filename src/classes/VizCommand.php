@@ -92,7 +92,7 @@ class VizCommand extends BaseCommand
 
         $rootVertex = $this->getVertex($rootPackage);
 
-        if (!$this->noVertexVersions && !empty($package->getVersion())) {
+        if (!$this->noVertexVersions) {
             $rootVertex->setAttribute('graphviz.label', "{$rootPackage}: {$package->getPrettyVersion()}");
         }
 
