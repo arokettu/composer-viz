@@ -1,16 +1,23 @@
 # ComposerViz
 
-A CLI tool to generate dependency graph by GraphViz inspired by `bundle viz`
+A Composer plugin to generate dependency graph by GraphViz inspired by `bundle viz`
+
+## Installation
+
+Install globally so you can use it on any project
+
+```bash
+composer global require sandfoxme/composer-viz:^2.0
+```
 
 ## Usage
 
 ```
-composer-viz [-d|--path PATH] [-o|--output OUTPUT] [-f|--format FORMAT] 
+composer viz [-o|--output OUTPUT] [-f|--format FORMAT] 
              [--no-dev] [--no-php] [--no-ext] [--no-platform] 
              [--no-pkg-versions] [--no-dep-versions] [--no-versions]
 ```
 
-`-d|--path PATH`: Set path to the project's `composer.lock` and `composer.json`. If not set, current path will be used  
 `-o|--output OUTPUT`: Set output file. If not set, the result will be displayed from temporary file  
 `-f|--format FORMAT`: Set output file format. Useful if format is not detected from `--output`  
 `--no-dev`: Do not show development dependencies  
