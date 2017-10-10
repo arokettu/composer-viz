@@ -6,7 +6,6 @@ use Composer\Command\BaseCommand;
 use Fhaculty\Graph\Graph;
 use Fhaculty\Graph\Vertex;
 use Graphp\GraphViz\GraphViz;
-use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -33,7 +32,6 @@ class VizCommand extends BaseCommand
         $this->setName('viz');
         $this->setDescription('Generate a GraphViz representation of the dependency graph');
 
-//        $this->addOption('path',        'd',    InputOption::VALUE_REQUIRED,    'Path to composer.json and composer.lock', getcwd());
         $this->addOption('output',      'o',    InputOption::VALUE_REQUIRED,    'Output file');
         $this->addOption('format',      'f',    InputOption::VALUE_REQUIRED,    'Output file format');
 
@@ -49,7 +47,6 @@ class VizCommand extends BaseCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $path   = $input->getOption('working-dir') ?: getcwd();
         $noDev  = $input->getOption('no-dev');
 
         $noPlatform  = $input->getOption('no-platform');
@@ -63,8 +60,8 @@ class VizCommand extends BaseCommand
         $this->noVertexVersions = $noVersions || $input->getOption('no-pkg-versions');
         $this->noEdgeVersions   = $noVersions || $input->getOption('no-dep-versions');
 
-        $dataComposerJson = $this->loadJsonFromPath($path, 'composer.json');
-        $dataComposerLock = $this->loadJsonFromPath($path, 'composer.lock');
+        $dataComposerJson = $this->getComposer()->getPackage()->getConfig();
+        $dataComposerLock = $this->getComposer()->getLocker()->getLockData();
 
         if (empty($dataComposerJson['name'])) {
             $dataComposerJson['name'] = 'Project';
@@ -85,23 +82,6 @@ class VizCommand extends BaseCommand
         } else {
             $viz->display($this->graph);
         }
-    }
-
-    private function loadJsonFromPath($path, $file)
-    {
-        $jsonFile = realpath(implode('/', [$path, $file]));
-
-        if (!is_file($jsonFile) || !is_readable($jsonFile)) {
-            throw new RuntimeException("No {$file} available in {$path}");
-        }
-
-        $jsonData = json_decode(file_get_contents($jsonFile), JSON_OBJECT_AS_ARRAY);
-
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new RuntimeException("{$file} is not a valid json file");
-        }
-
-        return $jsonData;
     }
 
     /**
