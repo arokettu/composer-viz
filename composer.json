@@ -28,9 +28,7 @@
         "graphp/graphviz":      "~0.2.0"
     },
     "require-dev": {
-        "composer/composer":            "~1.5",
-        "indeyets/pake":                "~1.99",
-        "secondtruth/phar-compiler":    "~1.1"
+        "composer/composer":    "~1.5"
     },
     "bin": [
         "bin/composer-viz"
