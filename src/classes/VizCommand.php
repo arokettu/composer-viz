@@ -3,6 +3,7 @@
 namespace SandFoxMe\ComposerViz;
 
 use Composer\Command\BaseCommand;
+use Composer\Package\PackageInterface;
 use Fhaculty\Graph\Graph;
 use Fhaculty\Graph\Vertex;
 use Graphp\GraphViz\GraphViz;
@@ -60,7 +61,7 @@ class VizCommand extends BaseCommand
         $this->noVertexVersions = $noVersions || $input->getOption('no-pkg-versions');
         $this->noEdgeVersions   = $noVersions || $input->getOption('no-dep-versions');
 
-        $dataComposerJson = $this->getComposer()->getPackage()->getConfig();
+        $dataComposerJson = $this->getComposer()->getPackage();
         $dataComposerLock = $this->getComposer()->getLocker()->getLockData();
 
         if (empty($dataComposerJson['name'])) {
@@ -85,39 +86,45 @@ class VizCommand extends BaseCommand
     }
 
     /**
-     * @param array $data
+     * @param PackageInterface $package
      * @param bool $includeDev  include development dependencies
      * @param bool $asDev       treat as development
      */
-    private function processPackageData($data, $includeDev, $asDev)
+    private function processPackageData(PackageInterface $package, $includeDev, $asDev)
     {
-        $rootPackage = $data['name'];
+        $rootPackage = $package->getName();
 
         $rootVertex = $this->getVertex($rootPackage);
 
-        if (!$this->noVertexVersions && !empty($data['version'])) {
-            $rootVertex->setAttribute('graphviz.label', "{$rootPackage}: {$data['version']}");
+        if (!$this->noVertexVersions && !empty($package->getVersion())) {
+            $rootVertex->setAttribute('graphviz.label', "{$rootPackage}: {$package->getVersion()}");
         }
 
-        if (!empty($data['require'])) {
-            foreach ($data['require'] as $package => $version) {
-                if ($this->ignorePackage($package)) {
-                    continue;
-                }
+        foreach ($package->getRequires() as $link) {
+            $target = $link->getTarget();
 
-                $packageVertex = $this->getVertex($package);
-                $this->buildEdge($rootVertex, $packageVertex, $version, $asDev);
+            if ($this->ignorePackage($target)) {
+                continue;
             }
+
+            $constraint = $link->getConstraint();
+
+            $packageVertex = $this->getVertex($target);
+            $this->buildEdge($rootVertex, $packageVertex, $constraint, $asDev);
         }
 
-        if ($includeDev && !empty($data['require-dev'])) {
-            foreach ($data['require-dev'] as $package => $version) {
-                if ($this->ignorePackage($package)) {
+        if ($includeDev) {
+            foreach ($package->getDevRequires() as $link) {
+                $target = $link->getTarget();
+
+                if ($this->ignorePackage($target)) {
                     continue;
                 }
 
-                $packageVertex = $this->getVertex($package);
-                $this->buildEdge($rootVertex, $packageVertex, $version, true);
+                $constraint = $link->getConstraint();
+
+                $packageVertex = $this->getVertex($target);
+                $this->buildEdge($rootVertex, $packageVertex, $constraint, true);
             }
         }
     }
@@ -147,13 +154,15 @@ class VizCommand extends BaseCommand
 
     private function processLockFile($dataComposerLock, $dev)
     {
+        $localRepo = $this->getComposer()->getRepositoryManager()->getLocalRepository();
+
         foreach ($dataComposerLock['packages'] as $package) {
-            $this->processPackageData($package, false, false);
+            $this->processPackageData($localRepo->findPackage($package['name']), false, false);
         }
 
         if ($dev) {
             foreach ($dataComposerLock['packages-dev'] as $package) {
-                $this->processPackageData($package, false, true);
+                $this->processPackageData($localRepo->findPackage($package['name']), false, true);
             }
         }
     }
