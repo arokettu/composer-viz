@@ -17,7 +17,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "SandFoxMe\\ComposerViz\\": "src/classes"
+            "SandFoxMe\\ComposerViz\\": "src"
         }
     },
     "extra": {
@@ -25,7 +25,9 @@
     },
     "require": {
         "composer-plugin-api":  "^1.1",
-        "graphp/graphviz":      "~0.2.0"
+        "graphp/graphviz":      "~0.2.0",
+
+        "php":  "^5.5|^7.0"
     },
     "require-dev": {
         "composer/composer":    "~1.5"
