@@ -18,11 +18,11 @@
     ],
     "autoload": {
         "psr-4": {
-            "SandFoxMe\\ComposerViz\\": "src"
+            "SandFox\\ComposerViz\\": "src"
         }
     },
     "extra": {
-        "class": "SandFoxMe\\ComposerViz\\VizPlugin"
+        "class": "SandFox\\ComposerViz\\VizPlugin"
     },
     "require": {
         "composer-plugin-api":  "^1.1",

@@ -1,6 +1,6 @@
 <?php
 
-namespace SandFoxMe\ComposerViz;
+namespace SandFox\ComposerViz;
 
 use Composer\Composer;
 use Composer\IO\IOInterface;
