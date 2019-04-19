@@ -3,3 +3,4 @@
 /build
 /composer.lock
 /README.html
+/docs/*.html
