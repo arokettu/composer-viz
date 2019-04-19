@@ -1,5 +1,5 @@
-ComposerViz
-###########
+Composer Viz
+############
 
 |Packagist| |GitHub| |Gitlab| |Bitbucket|
 

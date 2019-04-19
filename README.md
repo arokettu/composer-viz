@@ -1,4 +1,4 @@
-# ComposerViz
+# Composer Viz
 
 [![Packagist](https://img.shields.io/packagist/v/sandfoxme/composer-viz.svg?maxAge=2592000)](https://packagist.org/packages/sandfoxme/composer-viz)
 [![Packagist](https://img.shields.io/github/license/sandfoxme/composer-viz.svg?maxAge=2592000)](https://opensource.org/licenses/MIT)
