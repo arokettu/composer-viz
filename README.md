@@ -10,7 +10,7 @@ A Composer plugin to generate dependency graph by GraphViz inspired by ``bundle 
 
 Install globally so you can use it on any project
 
-   composer global require sandfoxme/composer-viz:^2.0
+    composer global require sandfoxme/composer-viz:^2.0
 
 ## Example
 
