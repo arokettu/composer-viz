@@ -20,7 +20,7 @@ Running composer-viz 2.0.0 for itself: ``composer viz --output=composer-viz-2.0.
 
 ## Documentation
 
-Read full documentation here: <https://sandfox.dev/composer-viz.html>
+Read full documentation here: <https://sandfox.dev/php/composer-viz.html>
 
 # License
 

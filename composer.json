@@ -9,7 +9,7 @@
         "dependencies",
         "composer plugin"
     ],
-    "homepage": "https://sandfox.dev/composer-viz.html",
+    "homepage": "https://sandfox.dev/php/composer-viz.html",
     "license": "MIT",
     "authors": [
         {
