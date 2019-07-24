@@ -19,8 +19,7 @@ Example
 
 Running composer-viz 2.0.0 for itself: ``composer viz --output=composer-viz-2.0.0.svg``
 
-.. image:: images/composer-viz-2.0.0.svg
-   :target: images/composer-viz-2.0.0.svg
+.. figure:: images/composer-viz-2.0.0.svg
    :width: 100%
    :alt: selfie
 
