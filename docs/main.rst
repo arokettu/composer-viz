@@ -1,7 +1,7 @@
 Composer Viz
 ############
 
-|Packagist| |GitHub| |Gitlab| |Bitbucket|
+|Packagist| |GitHub| |Gitlab| |Bitbucket| |Gitea|
 
 A Composer plugin to generate dependency graph by GraphViz inspired by ``bundle viz``
 
@@ -70,9 +70,11 @@ The library is available as open source under the terms of the `MIT License`_.
 
 .. |Packagist|  image:: https://img.shields.io/packagist/v/sandfoxme/composer-viz.svg
    :target: https://packagist.org/packages/sandfoxme/composer-viz
-.. |GitHub|     image:: https://img.shields.io/badge/GitHub-composer--viz-informational.svg?logo=github
+.. |GitHub|     image:: https://img.shields.io/badge/get%20on-GitHub-informational.svg?logo=github
    :target: https://github.com/sandfoxme/composer-viz
-.. |Gitlab|     image:: https://img.shields.io/badge/Gitlab-composer--viz-informational.svg?logo=gitlab
+.. |Gitlab|     image:: https://img.shields.io/badge/get%20on-Gitlab-informational.svg?logo=gitlab
    :target: https://gitlab.com/sandfox/composer-viz
-.. |Bitbucket|  image:: https://img.shields.io/badge/Bitbucket-composer--viz-informational.svg?logo=bitbucket
+.. |Bitbucket|  image:: https://img.shields.io/badge/get%20on-Bitbucket-informational.svg?logo=bitbucket
    :target: https://bitbucket.org/sandfox/composer-viz
+.. |Gitea|      image:: https://img.shields.io/badge/get%20on-Gitea-informational.svg
+   :target: https://git.sandfox.dev/sandfox/composer-viz
