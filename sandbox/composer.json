@@ -1,0 +1,12 @@
+{
+    "repositories": [
+        {
+            "type": "path",
+            "version": "dev-master",
+            "url": ".."
+        }
+    ],
+    "require": {
+        "sandfoxme/composer-viz": "dev-master"
+    }
+}
