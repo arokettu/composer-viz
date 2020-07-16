@@ -17,6 +17,9 @@
             "email": "sandfox@sandfox.me"
         }
     ],
+    "config": {
+        "sort-packages": true
+    },
     "autoload": {
         "psr-4": {
             "SandFox\\ComposerViz\\": "src"
@@ -26,12 +29,12 @@
         "class": "SandFox\\ComposerViz\\VizPlugin"
     },
     "require": {
-        "composer-plugin-api":  "^1.1",
+        "composer-plugin-api":  "^1.1 | ^2.0",
         "graphp/graphviz":      "~0.2.0",
 
         "php":  "^5.5|^7.0|^8.0"
     },
     "require-dev": {
-        "composer/composer":    "~1.5"
+        "composer/composer":    "^2.0@dev"
     }
 }
