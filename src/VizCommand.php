@@ -33,17 +33,17 @@ class VizCommand extends BaseCommand
         $this->setName('viz');
         $this->setDescription('Generate a GraphViz representation of the dependency graph');
 
-        $this->addOption('output',      'o',    InputOption::VALUE_REQUIRED,    'Output file');
-        $this->addOption('format',      'f',    InputOption::VALUE_REQUIRED,    'Output file format');
+        $this->addOption('output', 'o', InputOption::VALUE_REQUIRED, 'Output file');
+        $this->addOption('format', 'f', InputOption::VALUE_REQUIRED, 'Output file format');
 
-        $this->addOption('no-dev',      null,   InputOption::VALUE_NONE,        'Ignore development dependencies');
-        $this->addOption('no-php',      null,   InputOption::VALUE_NONE,        'Ignore PHP dependencies');
-        $this->addOption('no-ext',      null,   InputOption::VALUE_NONE,        'Ignore PHP extension dependencies');
-        $this->addOption('no-platform', null,   InputOption::VALUE_NONE,        '--no-php and --no-ext');
+        $this->addOption('no-dev', null, InputOption::VALUE_NONE, 'Ignore development dependencies');
+        $this->addOption('no-php', null, InputOption::VALUE_NONE, 'Ignore PHP dependencies');
+        $this->addOption('no-ext', null, InputOption::VALUE_NONE, 'Ignore PHP extension dependencies');
+        $this->addOption('no-platform', null, InputOption::VALUE_NONE, '--no-php and --no-ext');
 
-        $this->addOption('no-pkg-versions', null,   InputOption::VALUE_NONE,    'Do not render version labels on vertices');
-        $this->addOption('no-dep-versions', null,   InputOption::VALUE_NONE,    'Do not render version labels on arrows');
-        $this->addOption('no-versions',     null,   InputOption::VALUE_NONE,    '--no-pkg-versions and --no-dep-versions');
+        $this->addOption('no-pkg-versions', null, InputOption::VALUE_NONE, 'Do not render version labels on vertices');
+        $this->addOption('no-dep-versions', null, InputOption::VALUE_NONE, 'Do not render version labels on arrows');
+        $this->addOption('no-versions', null, InputOption::VALUE_NONE, '--no-pkg-versions and --no-dep-versions');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
