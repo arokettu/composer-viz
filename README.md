@@ -22,6 +22,10 @@ Running composer-viz 2.0.0 for itself: ``composer viz --output=composer-viz-2.0.
 
 Read full documentation here: <https://sandfox.dev/php/composer-viz.html>
 
+## Support
+
+Please file issues on our main repo at GitLab: <https://gitlab.com/sandfox/composer-viz/-/issues>
+
 # License
 
 The library is available as open source under the terms of the [MIT License].

@@ -1,7 +1,7 @@
 Composer Viz
 ############
 
-|Packagist| |GitHub| |Gitlab| |Bitbucket| |Gitea|
+|Packagist| |GitLab| |GitHub| |Bitbucket| |Gitea|
 
 A Composer plugin to generate dependency graph by GraphViz inspired by ``bundle viz``
 
@@ -72,7 +72,7 @@ The library is available as open source under the terms of the `MIT License`_.
    :target: https://packagist.org/packages/sandfoxme/composer-viz
 .. |GitHub|     image:: https://img.shields.io/badge/get%20on-GitHub-informational.svg?logo=github
    :target: https://github.com/sandfoxme/composer-viz
-.. |Gitlab|     image:: https://img.shields.io/badge/get%20on-Gitlab-informational.svg?logo=gitlab
+.. |GitLab|     image:: https://img.shields.io/badge/get%20on-Gitlab-informational.svg?logo=gitlab
    :target: https://gitlab.com/sandfox/composer-viz
 .. |Bitbucket|  image:: https://img.shields.io/badge/get%20on-Bitbucket-informational.svg?logo=bitbucket
    :target: https://bitbucket.org/sandfox/composer-viz
