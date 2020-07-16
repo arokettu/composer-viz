@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.0
+
+_Jul 17, 2020_
+
+Support composer 2.0
+
 ## 2.0.1
 
 _Oct 10, 2017_
