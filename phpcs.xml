@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--
+    @see https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-Ruleset
+-->
+<ruleset name="Custom Standard" namespace="MyProject\CS\Standard">
+    <rule ref="PSR12"/>
+    <rule ref="PHPCompatibility"/>
+    <config name="testVersion" value="5.5-"/>
+    <file>src</file>
+</ruleset>
