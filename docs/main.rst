@@ -77,4 +77,4 @@ The library is available as open source under the terms of the `MIT License`_.
 .. |Bitbucket|  image:: https://img.shields.io/badge/get%20on-Bitbucket-informational.svg?logo=bitbucket
    :target: https://bitbucket.org/sandfox/composer-viz
 .. |Gitea|      image:: https://img.shields.io/badge/get%20on-Gitea-informational.svg
-   :target: https://git.sandfox.dev/sandfox/composer-viz
+   :target: https://sandfox.org/sandfox/composer-viz
