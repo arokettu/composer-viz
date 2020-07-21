@@ -69,12 +69,12 @@ The library is available as open source under the terms of the `MIT License`_.
 .. _MIT License:        https://opensource.org/licenses/MIT
 
 .. |Packagist|  image:: https://img.shields.io/packagist/v/sandfoxme/composer-viz.svg
-   :target: https://packagist.org/packages/sandfoxme/composer-viz
+   :target:     https://packagist.org/packages/sandfoxme/composer-viz
 .. |GitHub|     image:: https://img.shields.io/badge/get%20on-GitHub-informational.svg?logo=github
-   :target: https://github.com/sandfoxme/composer-viz
+   :target:     https://github.com/arokettu/composer-viz
 .. |GitLab|     image:: https://img.shields.io/badge/get%20on-GitLab-informational.svg?logo=gitlab
-   :target: https://gitlab.com/sandfox/composer-viz
+   :target:     https://gitlab.com/sandfox/composer-viz
 .. |Bitbucket|  image:: https://img.shields.io/badge/get%20on-Bitbucket-informational.svg?logo=bitbucket
-   :target: https://bitbucket.org/sandfox/composer-viz
+   :target:     https://bitbucket.org/sandfox/composer-viz
 .. |Gitea|      image:: https://img.shields.io/badge/get%20on-Gitea-informational.svg
-   :target: https://sandfox.org/sandfox/composer-viz
+   :target:     https://sandfox.org/sandfox/composer-viz
