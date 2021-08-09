@@ -16,7 +16,7 @@ Install globally so you can use it on any project
 
 Running composer-viz 2.0.0 for itself: ``composer viz --output=composer-viz-2.0.0.svg``
 
-[![selfie](https://sandfox.dev/_images/composer-viz-2.0.0.svg)](https://sandfox.dev/_static/composer-viz/composer-viz-2.0.0.svg)
+[![selfie](https://sandfox.dev/_images/composer-viz-2.0.0.svg)](https://sandfox.dev/_images/composer-viz-2.0.0.svg)
 
 ## Documentation
 
