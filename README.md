@@ -1,8 +1,8 @@
 # Composer Viz
 
-[![Packagist](https://img.shields.io/packagist/v/sandfoxme/composer-viz.svg?maxAge=2592000)](https://packagist.org/packages/sandfoxme/composer-viz)
-[![Packagist](https://img.shields.io/github/license/sandfoxme/composer-viz.svg?maxAge=2592000)](https://opensource.org/licenses/MIT)
-[![Code Climate](https://img.shields.io/codeclimate/maintainability/sandfoxme/composer-viz.svg?maxAge=2592000)](https://codeclimate.com/github/sandfoxme/composer-viz)
+[![Packagist](https://img.shields.io/packagist/v/sandfoxme/composer-viz.svg?style=flat-square)](https://packagist.org/packages/sandfoxme/composer-viz)
+[![Packagist](https://img.shields.io/github/license/sandfoxme/composer-viz.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+[![Code Climate](https://img.shields.io/codeclimate/maintainability/sandfoxme/composer-viz.svg?style=flat-square)](https://codeclimate.com/github/sandfoxme/composer-viz)
 
 A Composer plugin to generate dependency graph by GraphViz inspired by ``bundle viz``
 
