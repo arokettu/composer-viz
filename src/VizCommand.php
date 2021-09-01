@@ -31,7 +31,7 @@ class VizCommand extends BaseCommand
     protected function configure()
     {
         $this->setName('viz');
-        $this->setDescription('Generate a GraphViz representation of the dependency graph');
+        $this->setDescription('Generates a GraphViz representation of the dependency graph.');
 
         $this->addOption('output', 'o', InputOption::VALUE_REQUIRED, 'Output file');
         $this->addOption('format', 'f', InputOption::VALUE_REQUIRED, 'Output file format');
