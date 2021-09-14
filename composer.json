@@ -29,12 +29,12 @@
         "class": "SandFox\\ComposerViz\\VizPlugin"
     },
     "require": {
-        "php": "^5.5 | ^7.0 | ^8.0",
+        "php": ">= 5.5 < 9",
         "composer-plugin-api": "^1.1 | ^2.0",
         "graphp/graphviz": "~0.2.0"
     },
     "require-dev": {
-        "composer/composer": "^2.0@dev",
+        "composer/composer": "^2.0",
         "dealerdirect/phpcodesniffer-composer-installer": "*",
         "phpcompatibility/php-compatibility": "*",
         "squizlabs/php_codesniffer": "*"
