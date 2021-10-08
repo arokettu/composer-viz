@@ -3,25 +3,18 @@ Composer Viz
 
 |Packagist| |GitLab| |GitHub| |Bitbucket| |Gitea|
 
-A Composer plugin to generate dependency graph by GraphViz inspired by ``bundle viz``
+A Composer plugin to generate dependency graph by GraphViz inspired by ``bundle viz``.
 
 Installation
 ============
 
-Install globally so you can use it on any project
+Install globally so you can use it on any project:
 
 .. code-block:: bash
 
-   composer global require sandfoxme/composer-viz:^2.0
+   composer global require sandfoxme/composer-viz:^2.2
 
-Example
-=======
-
-Running composer-viz 2.0.0 for itself: ``composer viz --output=composer-viz-2.0.0.svg``
-
-.. figure:: images/composer-viz-2.0.0.svg
-   :width: 100%
-   :alt: selfie
+The system should have GraphViz_ installed.
 
 Usage
 =====
@@ -41,6 +34,35 @@ Usage
 --no-pkg-versions           Do not show package versions on graph vertices
 --no-dep-versions           Do not show package versions on graph edges
 --no-versions               ``--no-pkg-versions`` + ``--no-dep-versions``
+
+Examples
+========
+
+Running composer-viz 2.2.0 for itself: ``composer viz --output=composer-viz-2.2.0.svg``
+
+.. figure:: images/composer-viz-2.2.0.svg
+   :width: 100%
+   :alt: selfie
+
+More artificial example that shows more features (for ``sandbox/composer.json``):
+
+.. figure:: images/composer-viz-example.svg
+   :width: 100%
+   :alt: example
+
+Vertices:
+
+* Green: root package
+* White: regular package
+* Grey: development dependency
+* Blue: platform package (PHP, extensions, Composer API)
+* Red: package is provided by another package
+
+Edges:
+
+* Solid: regular dependency
+* Dashed: development dependency
+* Dotted: 'provided by' relationship
 
 GraphViz
 ========
