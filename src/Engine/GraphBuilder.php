@@ -13,6 +13,7 @@ class GraphBuilder
     const COLOR_ROOT        = '#eeffee';
     const COLOR_DEV         = '#eeeeee';
     const COLOR_PLATFORM    = '#eeeeff';
+    const COLOR_PROVIDED    = '#ffeeee';
 
     const NODE_ROOT = 1001;
     const NODE_DEP = 1002;
@@ -35,6 +36,8 @@ class GraphBuilder
     private $vertices = [];
     /** @var Vertex[] */
     private $phpVertices = [];
+    /** @var string[][] */
+    private $provides = [];
 
     private $noDev;
     private $noExt;
@@ -73,7 +76,18 @@ class GraphBuilder
 
         foreach ($this->phpVertices as $vertex) {
             $php = $this->getVertex('php', self::NODE_DEP);
-            $this->buildEdge($vertex, $php, 'self.version', self::EDGE_PROVIDED);
+            $this->buildEdge($vertex, $php, '', self::EDGE_PROVIDED);
+        }
+
+        foreach ($this->provides as list($package, $provided)) {
+            if (!isset($this->vertices[$provided])) {
+                continue;
+            }
+
+            $packageVertex = $this->getVertex($package, self::NODE_DEP);
+            $providedVertex = $this->getVertex($provided, self::NODE_DEP);
+            $providedVertex->setAttribute('graphviz.fillcolor', self::COLOR_PROVIDED);
+            $this->buildEdge($providedVertex, $packageVertex, '', self::EDGE_PROVIDED);
         }
 
         return $this->graph;
@@ -113,6 +127,10 @@ class GraphBuilder
                 $constraint,
                 $nodeType === self::NODE_DEV ? self::EDGE_DEV : self::EDGE_REGULAR
             );
+        }
+
+        foreach ($package->getProvides() as $link) {
+            $this->provides[] = [$rootPackage, $link->getTarget()];
         }
 
         if ($includeDev) {
