@@ -74,8 +74,6 @@ class GraphBuilder
     {
         $rootPackage = $package->getName();
 
-        var_dump($rootPackage, $nodeType);
-
         $rootVertex = $this->getVertex($rootPackage, $nodeType);
 
         if (!$this->noVertexVersions) {

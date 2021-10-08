@@ -1,12 +1,24 @@
 {
+    "config": {
+        "sort-packages": true
+    },
     "repositories": [
         {
             "type": "path",
-            "version": "dev-master",
+            "version": "99999",
             "url": ".."
         }
     ],
     "require": {
-        "sandfoxme/composer-viz": "dev-master"
+        "php-64bit": "*",
+        "ext-json": "*",
+        "psr/http-factory-implementation": "^1.0",
+        "sandfoxme/composer-viz": "@dev"
+    },
+    "require-dev": {
+        "php-ipv6": "*",
+        "ext-curl": "*",
+        "laminas/laminas-barcode": "^2.5",
+        "laminas/laminas-diactoros": "^2.8"
     }
 }
