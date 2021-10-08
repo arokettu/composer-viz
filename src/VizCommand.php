@@ -3,31 +3,14 @@
 namespace SandFox\ComposerViz;
 
 use Composer\Command\BaseCommand;
-use Composer\Package\PackageInterface;
-use Fhaculty\Graph\Graph;
-use Fhaculty\Graph\Vertex;
 use Graphp\GraphViz\GraphViz;
+use SandFox\ComposerViz\Engine\GraphBuilder;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class VizCommand extends BaseCommand
 {
-    /**
-     * @var Graph
-     */
-    private $graph;
-    /**
-     * @var Vertex[]
-     */
-    private $vertices = [];
-
-    private $noExt;
-    private $noPHP;
-
-    private $noVertexVersions;
-    private $noEdgeVersions;
-
     protected function configure()
     {
         $this->setName('viz');
@@ -51,131 +34,34 @@ class VizCommand extends BaseCommand
         $noDev  = $input->getOption('no-dev');
 
         $noPlatform  = $input->getOption('no-platform');
-        $this->noExt = $noPlatform || $input->getOption('no-ext');
-        $this->noPHP = $noPlatform || $input->getOption('no-php');
+        $noExt = $noPlatform || $input->getOption('no-ext');
+        $noPHP = $noPlatform || $input->getOption('no-php');
 
-        $format     = $input->getOption('format');
-        $outFile    = $input->getOption('output');
+        $format  = $input->getOption('format');
+        $outFile = $input->getOption('output');
 
         $noVersions = $input->getOption('no-versions');
-        $this->noVertexVersions = $noVersions || $input->getOption('no-pkg-versions');
-        $this->noEdgeVersions   = $noVersions || $input->getOption('no-dep-versions');
+        $noVertexVersions = $noVersions || $input->getOption('no-pkg-versions');
+        $noEdgeVersions   = $noVersions || $input->getOption('no-dep-versions');
 
-        $dataComposerJson = $this->getComposer()->getPackage();
-        $dataComposerLock = $this->getComposer()->getLocker()->getLockData();
-
-        $this->graph = new Graph();
-
-        $this->processPackageData($dataComposerJson, !$noDev, false);
-        $this->processLockFile($dataComposerLock, !$noDev);
+        $graph = (new GraphBuilder(
+            $this->getComposer(),
+            $noDev,
+            $noExt,
+            $noPHP,
+            $noVertexVersions,
+            $noEdgeVersions
+        ))->build();
 
         $viz = new GraphViz();
-
         $viz->setFormat($this->detectFormat($outFile, $format));
 
         if ($outFile) {
-            $file = $viz->createImageFile($this->graph);
+            $file = $viz->createImageFile($graph);
             rename($file, $outFile);
         } else {
-            $viz->display($this->graph);
+            $viz->display($graph);
         }
-    }
-
-    /**
-     * @param PackageInterface $package
-     * @param bool $includeDev  include development dependencies
-     * @param bool $asDev       treat as development
-     */
-    private function processPackageData(PackageInterface $package, $includeDev, $asDev)
-    {
-        $rootPackage = $package->getName();
-
-        $rootVertex = $this->getVertex($rootPackage);
-
-        if (!$this->noVertexVersions) {
-            $rootVertex->setAttribute('graphviz.label', "{$rootPackage}: {$package->getPrettyVersion()}");
-        }
-
-        foreach ($package->getRequires() as $link) {
-            $target = $link->getTarget();
-
-            if ($this->ignorePackage($target)) {
-                continue;
-            }
-
-            $constraint = $link->getPrettyConstraint();
-
-            $packageVertex = $this->getVertex($target);
-            $this->buildEdge($rootVertex, $packageVertex, $constraint, $asDev);
-        }
-
-        if ($includeDev) {
-            foreach ($package->getDevRequires() as $link) {
-                $target = $link->getTarget();
-
-                if ($this->ignorePackage($target)) {
-                    continue;
-                }
-
-                $constraint = $link->getPrettyConstraint();
-
-                $packageVertex = $this->getVertex($target);
-                $this->buildEdge($rootVertex, $packageVertex, $constraint, true);
-            }
-        }
-    }
-
-    private function getVertex($name)
-    {
-        if (!isset($this->vertices[$name])) {
-            $vertex = $this->graph->createVertex($name);
-            $this->vertices[$name] = $vertex;
-        }
-
-        return $this->vertices[$name];
-    }
-
-    private function buildEdge(Vertex $from, Vertex $to, $version, $dev)
-    {
-        $edge = $from->createEdgeTo($to);
-
-        if (!$this->noEdgeVersions) {
-            $edge->setAttribute('graphviz.label', $version);
-        }
-
-        if ($dev) {
-            $edge->setAttribute('graphviz.style', 'dashed');
-        }
-    }
-
-    private function processLockFile($dataComposerLock, $dev)
-    {
-        $localRepo = $this->getComposer()->getRepositoryManager()->getLocalRepository();
-
-        foreach ($dataComposerLock['packages'] as $package) {
-            $this->processPackageData($localRepo->findPackage($package['name'], '*'), false, false);
-        }
-
-        if ($dev) {
-            foreach ($dataComposerLock['packages-dev'] as $package) {
-                $this->processPackageData($localRepo->findPackage($package['name'], '*'), false, true);
-            }
-        }
-    }
-
-    private function ignorePackage($name)
-    {
-        // filter extensions (begins with ext-, no namespace slash)
-        if ($this->noExt && strpos($name, 'ext-') === 0 && strpos($name, '/') === false) {
-            return true;
-        }
-
-        // filter php platform (begins with php, no namespace slash)
-        if ($this->noPHP && strpos($name, 'php') === 0 && strpos($name, '/') === false) {
-            return true;
-        }
-
-        return false;
     }
 
     private function detectFormat($filename, $format)
