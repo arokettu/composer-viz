@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.2.1
+
+*Oct 8, 2021*
+
+* Added library packages support
+* Added replacement packages support
+
 ## 2.2.0
 
 *Oct 8, 2021*
