@@ -1,25 +1,32 @@
 # Changelog
 
+## 2.2.0
+
+*Oct 8, 2021*
+
+* Color coded packages
+* 'Provided by' links are now supported
+
 ## 2.1.0
 
-_Jul 17, 2020_
+*Jul 17, 2020*
 
 Support composer 2.0
 
 ## 2.0.1
 
-_Oct 10, 2017_
+*Oct 10, 2017*
 
 Fix installation warning: we no longer have bin/composer-viz
 
 ## 2.0.0
 
-_Oct 10, 2017_
+*Oct 10, 2017*
 
 Convert the project to the composer plugin
 
 ## 1.0.0
 
-_Aug 6, 2017_
+*Aug 6, 2017*
 
 Initial release
