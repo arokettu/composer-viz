@@ -14,21 +14,27 @@ class GraphBuilder
     const COLOR_DEV         = '#eeeeee';
     const COLOR_PLATFORM    = '#eeeeff';
 
-    const NODE_ROOT = 1;
-    const NODE_DEP = 2;
-    const NODE_DEV = 3;
+    const NODE_ROOT = 1001;
+    const NODE_DEP = 1002;
+    const NODE_DEV = 1003;
 
-    const PACKAGE_PHP = 1;
-    const PACKAGE_EXTENSION = 2;
-    const PACKAGE_COMPOSER = 3;
-    const PACKAGE_PACKAGE = 4;
+    const PACKAGE_REGULAR = 2001;
+    const PACKAGE_PHP = 2002;
+    const PACKAGE_EXTENSION = 2003;
+    const PACKAGE_COMPOSER = 2004;
+
+    const EDGE_REGULAR = 'solid';
+    const EDGE_DEV = 'dashed';
+    const EDGE_PROVIDED = 'dotted';
 
     /** @var Composer */
     private $composer;
     /** @var Graph */
-    private $graph;
+    private $graph = null;
     /** @var Vertex[] */
-    private $vertices;
+    private $vertices = [];
+    /** @var Vertex[] */
+    private $phpVertices = [];
 
     private $noDev;
     private $noExt;
@@ -53,14 +59,22 @@ class GraphBuilder
      */
     public function build()
     {
+        if ($this->graph) {
+            return $this->graph;
+        }
+
         $this->graph = new Graph();
-        $this->vertices = [];
 
         $dataComposerJson = $this->composer->getPackage();
         $dataComposerLock = $this->composer->getLocker()->getLockData();
 
         $this->processPackageData($dataComposerJson, self::NODE_ROOT, !$this->noDev);
         $this->processLockFile($dataComposerLock, !$this->noDev);
+
+        foreach ($this->phpVertices as $vertex) {
+            $php = $this->getVertex('php', self::NODE_DEP);
+            $this->buildEdge($vertex, $php, 'self.version', self::EDGE_PROVIDED);
+        }
 
         return $this->graph;
     }
@@ -89,8 +103,16 @@ class GraphBuilder
 
             $constraint = $link->getPrettyConstraint();
 
-            $packageVertex = $this->getVertex($target, $nodeType === self::NODE_DEV ? self::NODE_DEV : self::NODE_DEP);
-            $this->buildEdge($rootVertex, $packageVertex, $constraint, $nodeType === self::NODE_DEV);
+            $packageVertex = $this->getVertex(
+                $target,
+                $nodeType === self::NODE_DEV ? self::NODE_DEV : self::NODE_DEP
+            );
+            $this->buildEdge(
+                $rootVertex,
+                $packageVertex,
+                $constraint,
+                $nodeType === self::NODE_DEV ? self::EDGE_DEV : self::EDGE_REGULAR
+            );
         }
 
         if ($includeDev) {
@@ -104,7 +126,7 @@ class GraphBuilder
                 $constraint = $link->getPrettyConstraint();
 
                 $packageVertex = $this->getVertex($target, self::NODE_DEV);
-                $this->buildEdge($rootVertex, $packageVertex, $constraint, true);
+                $this->buildEdge($rootVertex, $packageVertex, $constraint, self::EDGE_DEV);
             }
         }
     }
@@ -113,17 +135,18 @@ class GraphBuilder
     {
         if (!isset($this->vertices[$name])) {
             $vertex = $this->graph->createVertex($name);
+            $packageType = $this->packageType($name);
 
             if ($nodeType === self::NODE_ROOT) {
                 $color = self::COLOR_ROOT;
             } else {
-                switch ($this->packageType($name)) {
+                switch ($packageType) {
                     case self::PACKAGE_EXTENSION:
                     case self::PACKAGE_COMPOSER:
                     case self::PACKAGE_PHP:
                         $color = self::COLOR_PLATFORM;
                         break;
-                    case self::PACKAGE_PACKAGE:
+                    case self::PACKAGE_REGULAR:
                         $color = $nodeType === self::NODE_DEV ? self::COLOR_DEV : self::COLOR_DEFAULT;
                         break;
                     default:
@@ -136,12 +159,17 @@ class GraphBuilder
             $vertex->setAttribute('graphviz.fillcolor', $color);
 
             $this->vertices[$name] = $vertex;
+
+            // make php-64bit and php-ipv6 'provide' PHP
+            if ($packageType === self::PACKAGE_PHP && $name !== 'php') {
+                $this->phpVertices[$name] = $vertex;
+            }
         }
 
         return $this->vertices[$name];
     }
 
-    private function buildEdge(Vertex $from, Vertex $to, $version, $dev)
+    private function buildEdge(Vertex $from, Vertex $to, $version, $type)
     {
         $edge = $from->createEdgeTo($to);
 
@@ -149,9 +177,7 @@ class GraphBuilder
             $edge->setAttribute('graphviz.label', $version);
         }
 
-        if ($dev) {
-            $edge->setAttribute('graphviz.style', 'dashed');
-        }
+        $edge->setAttribute('graphviz.style', $type);
     }
 
     private function processLockFile($dataComposerLock, $dev)
@@ -188,8 +214,8 @@ class GraphBuilder
 
     private function packageType($name)
     {
-        if (str_contains($name, '/')) {
-            return self::PACKAGE_PACKAGE;
+        if (str_contains($name, '/') || $name === '__root__') {
+            return self::PACKAGE_REGULAR;
         }
 
         if (str_starts_with($name, 'ext-')) {
