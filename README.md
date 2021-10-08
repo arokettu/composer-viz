@@ -10,13 +10,13 @@ A Composer plugin to generate dependency graph by GraphViz inspired by ``bundle 
 
 Install globally so you can use it on any project
 
-    composer global require sandfoxme/composer-viz:^2.0
+    composer global require sandfoxme/composer-viz:^2.2
 
 ## Example
 
-Running composer-viz 2.0.0 for itself: ``composer viz --output=composer-viz-2.0.0.svg``
+Running composer-viz 2.2.0 for itself: ``composer viz --output=composer-viz-2.2.0.svg``
 
-[![selfie](https://sandfox.dev/_images/composer-viz-2.0.0.svg)](https://sandfox.dev/_images/composer-viz-2.0.0.svg)
+[![selfie](https://sandfox.dev/_images/composer-viz-2.2.0.svg)](https://sandfox.dev/_images/composer-viz-2.2.0.svg)
 
 ## Documentation
 
