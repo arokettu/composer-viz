@@ -1,6 +1,7 @@
 /.idea
 /vendor
 /build
+/docs/build
 /composer.lock
 /README.html
 /docs/*.html
