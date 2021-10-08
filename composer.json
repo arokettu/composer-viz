@@ -23,7 +23,10 @@
     "autoload": {
         "psr-4": {
             "SandFox\\ComposerViz\\": "src"
-        }
+        },
+        "files": [
+            "lib/polyfill.php"
+        ]
     },
     "extra": {
         "class": "SandFox\\ComposerViz\\VizPlugin"
