@@ -1,5 +1,8 @@
 {
     "config": {
+        "platform": {
+            "php": "8.0"
+        },
         "sort-packages": true
     },
     "repositories": [
@@ -11,13 +14,16 @@
     ],
     "require": {
         "php-64bit": "*",
-        "ext-json": "*",
+        "ext-curl": "*",
+        "lib-curl": "^7.76",
         "psr/http-factory-implementation": "^1.0",
-        "sandfoxme/composer-viz": "@dev"
+        "sandfoxme/composer-viz": "@dev",
+        "symfony/polyfill": "^1.23",
+        "symfony/symfony": "^5.3"
     },
     "require-dev": {
         "php-ipv6": "*",
-        "ext-curl": "*",
+        "ext-json": "*",
         "laminas/laminas-barcode": "^2.5",
         "laminas/laminas-diactoros": "^2.8"
     }

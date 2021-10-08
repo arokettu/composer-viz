@@ -79,7 +79,7 @@ class GraphBuilder
             $this->buildEdge($vertex, $php, '', self::EDGE_PROVIDED);
         }
 
-        foreach ($this->provides as list($package, $provided)) {
+        foreach ($this->provides as list($package, $provided, $version)) {
             if (!isset($this->vertices[$provided])) {
                 continue;
             }
@@ -87,7 +87,7 @@ class GraphBuilder
             $packageVertex = $this->getVertex($package, self::NODE_DEP);
             $providedVertex = $this->getVertex($provided, self::NODE_DEP);
             $providedVertex->setAttribute('graphviz.fillcolor', self::COLOR_PROVIDED);
-            $this->buildEdge($providedVertex, $packageVertex, '', self::EDGE_PROVIDED);
+            $this->buildEdge($providedVertex, $packageVertex, $version, self::EDGE_PROVIDED);
         }
 
         return $this->graph;
@@ -130,7 +130,11 @@ class GraphBuilder
         }
 
         foreach ($package->getProvides() as $link) {
-            $this->provides[] = [$rootPackage, $link->getTarget()];
+            $this->provides[] = [$rootPackage, $link->getTarget(), $link->getPrettyConstraint()];
+        }
+
+        foreach ($package->getReplaces() as $link) {
+            $this->provides[] = [$rootPackage, $link->getTarget(), $link->getPrettyConstraint()];
         }
 
         if ($includeDev) {
@@ -236,7 +240,7 @@ class GraphBuilder
             return self::PACKAGE_REGULAR;
         }
 
-        if (str_starts_with($name, 'ext-')) {
+        if (str_starts_with($name, 'ext-') || str_starts_with($name, 'lib-')) {
             return self::PACKAGE_EXTENSION;
         }
 
