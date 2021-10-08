@@ -22,6 +22,8 @@ Running composer-viz 2.2.0 for itself: ``composer viz --output=composer-viz-2.2.
 
 Read full documentation here: <https://sandfox.dev/php/composer-viz.html>
 
+Also on Read the Docs: <https://composer-viz.readthedocs.io/>
+
 ## Support
 
 Please file issues on our main repo at GitLab: <https://gitlab.com/sandfox/composer-viz/-/issues>
