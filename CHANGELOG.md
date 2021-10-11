@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.2.2
+
+*Oct 11, 2021*
+
+* Fixed PHP 5 & 7 support broken
+
 ## 2.2.1
 
 *Oct 8, 2021*
