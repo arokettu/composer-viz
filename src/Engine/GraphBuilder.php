@@ -6,6 +6,7 @@ use Composer\Composer;
 use Composer\Package\PackageInterface;
 use Fhaculty\Graph\Graph;
 use Fhaculty\Graph\Vertex;
+use SandFox\ComposerViz\Helpers\StringHelper;
 
 class GraphBuilder
 {
@@ -236,19 +237,19 @@ class GraphBuilder
 
     private function packageType($name)
     {
-        if (str_contains($name, '/') || $name === '__root__') {
+        if (StringHelper::strContains($name, '/') || $name === '__root__') {
             return self::PACKAGE_REGULAR;
         }
 
-        if (str_starts_with($name, 'ext-') || str_starts_with($name, 'lib-')) {
+        if (StringHelper::strStartsWith($name, 'ext-') || StringHelper::strStartsWith($name, 'lib-')) {
             return self::PACKAGE_EXTENSION;
         }
 
-        if (str_starts_with($name, 'php')) {
+        if (StringHelper::strStartsWith($name, 'php')) {
             return self::PACKAGE_PHP;
         }
 
-        if (str_starts_with($name, 'composer-')) {
+        if (StringHelper::strStartsWith($name, 'composer-')) {
             return self::PACKAGE_COMPOSER;
         }
 

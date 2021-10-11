@@ -25,15 +25,15 @@
         "docs": "https://composer-viz.readthedocs.io/"
     },
     "config": {
+        "platform": {
+            "php": "5.5.99"
+        },
         "sort-packages": true
     },
     "autoload": {
         "psr-4": {
             "SandFox\\ComposerViz\\": "src"
-        },
-        "files": [
-            "lib/polyfill.php"
-        ]
+        }
     },
     "extra": {
         "class": "SandFox\\ComposerViz\\VizPlugin"
