@@ -8,7 +8,10 @@ use Fhaculty\Graph\Graph;
 use Fhaculty\Graph\Vertex;
 use SandFox\ComposerViz\Helpers\StringHelper;
 
-class GraphBuilder
+/**
+ * @internal
+ */
+final class GraphBuilder
 {
     const COLOR_DEFAULT     = '#ffffff';
     const COLOR_ROOT        = '#eeffee';

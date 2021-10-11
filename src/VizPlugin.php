@@ -8,7 +8,10 @@ use Composer\Plugin\Capability\CommandProvider;
 use Composer\Plugin\Capable;
 use Composer\Plugin\PluginInterface;
 
-class VizPlugin implements PluginInterface, Capable
+/**
+ * @internal
+ */
+final class VizPlugin implements PluginInterface, Capable
 {
     public function activate(Composer $composer, IOInterface $io)
     {
