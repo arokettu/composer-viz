@@ -3,6 +3,7 @@
 namespace SandFox\ComposerViz\Engine;
 
 use Composer\Composer;
+use Composer\Package\Loader\ArrayLoader;
 use Composer\Package\PackageInterface;
 use Fhaculty\Graph\Graph;
 use Fhaculty\Graph\Vertex;
@@ -34,6 +35,8 @@ final class GraphBuilder
 
     /** @var Composer */
     private $composer;
+    /** @var ArrayLoader */
+    private $arrayLoader;
     /** @var Graph */
     private $graph = null;
     /** @var Vertex[] */
@@ -59,6 +62,7 @@ final class GraphBuilder
         $this->noEdgeVersions = $noEdgeVersions;
 
         $this->composer = $composer;
+        $this->arrayLoader = new ArrayLoader();
     }
 
     /**
@@ -217,19 +221,8 @@ final class GraphBuilder
 
     private function processPackageList(array $packages, $nodeType)
     {
-        $localRepo = $this->composer->getRepositoryManager()->getLocalRepository();
-
-        foreach ($packages as $p) {
-            $package = $localRepo->findPackage($p['name'], '*');
-
-            if ($package === null) {
-                throw new \RuntimeException(
-                    "Package '{$p['name']}' was not found locally. " .
-                    "Please run 'composer install' or 'composer update'."
-                );
-            }
-
-            $this->processPackageData($package, $nodeType, false);
+        foreach ($packages as $package) {
+            $this->processPackageData($this->arrayLoader->load($package), $nodeType, false);
         }
     }
 
