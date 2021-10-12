@@ -208,16 +208,28 @@ final class GraphBuilder
 
     private function processLockFile($dataComposerLock, $dev)
     {
-        $localRepo = $this->composer->getRepositoryManager()->getLocalRepository();
-
-        foreach ($dataComposerLock['packages'] as $package) {
-            $this->processPackageData($localRepo->findPackage($package['name'], '*'), self::NODE_DEP, false);
-        }
+        $this->processPackageList($dataComposerLock['packages'], self::NODE_DEP);
 
         if ($dev) {
-            foreach ($dataComposerLock['packages-dev'] as $package) {
-                $this->processPackageData($localRepo->findPackage($package['name'], '*'), self::NODE_DEV, false);
+            $this->processPackageList($dataComposerLock['packages-dev'], self::NODE_DEV);
+        }
+    }
+
+    private function processPackageList(array $packages, $nodeType)
+    {
+        $localRepo = $this->composer->getRepositoryManager()->getLocalRepository();
+
+        foreach ($packages as $p) {
+            $package = $localRepo->findPackage($p['name'], '*');
+
+            if ($package === null) {
+                throw new \RuntimeException(
+                    "Package '{$p['name']}' was not found locally. " .
+                    "Please run 'composer install' or 'composer update'."
+                );
             }
+
+            $this->processPackageData($package, $nodeType, false);
         }
     }
 
