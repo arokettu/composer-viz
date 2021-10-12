@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.2.3
+
+*Oct 12, 2021*
+
+* Only `composer.lock` is now required, no need for installed packages
+
 ## 2.2.2
 
 *Oct 11, 2021*
