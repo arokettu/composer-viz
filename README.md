@@ -1,8 +1,7 @@
 # Composer Viz
 
-[![Packagist](https://img.shields.io/packagist/v/sandfoxme/composer-viz.svg?style=flat-square)](https://packagist.org/packages/sandfoxme/composer-viz)
-[![Packagist](https://img.shields.io/github/license/sandfoxme/composer-viz.svg?style=flat-square)](https://opensource.org/licenses/MIT)
-[![Code Climate](https://img.shields.io/codeclimate/maintainability/sandfoxme/composer-viz.svg?style=flat-square)](https://codeclimate.com/github/sandfoxme/composer-viz)
+[![Packagist](https://img.shields.io/packagist/v/arokettu/composer-viz.svg?style=flat-square)](https://packagist.org/packages/arokettu/composer-viz)
+[![Packagist](https://img.shields.io/github/license/arokettu/composer-viz.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
 A Composer plugin to generate dependency graph by GraphViz inspired by ``bundle viz``
 
@@ -10,7 +9,7 @@ A Composer plugin to generate dependency graph by GraphViz inspired by ``bundle 
 
 Install globally so you can use it on any project
 
-    composer global require sandfoxme/composer-viz:^2.2
+    composer global require arokettu/composer-viz:^2.2
 
 ## Example
 

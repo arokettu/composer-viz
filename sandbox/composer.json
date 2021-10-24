@@ -16,8 +16,8 @@
         "php-64bit": "*",
         "ext-curl": "*",
         "lib-curl": "^7.76",
+        "arokettu/composer-viz": "@dev",
         "psr/http-factory-implementation": "^1.0",
-        "sandfoxme/composer-viz": "@dev",
         "symfony/polyfill": "^1.23",
         "symfony/symfony": "^5.3"
     },

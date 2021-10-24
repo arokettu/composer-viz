@@ -12,7 +12,7 @@ Install globally so you can use it on any project:
 
 .. code-block:: bash
 
-   composer global require sandfoxme/composer-viz:^2.2
+   composer global require arokettu/composer-viz:^2.2
 
 The system should have GraphViz_ installed.
 
@@ -90,8 +90,8 @@ The library is available as open source under the terms of the `MIT License`_.
 
 .. _MIT License:        https://opensource.org/licenses/MIT
 
-.. |Packagist|  image:: https://img.shields.io/packagist/v/sandfoxme/composer-viz.svg?style=flat-square
-   :target:     https://packagist.org/packages/sandfoxme/composer-viz
+.. |Packagist|  image:: https://img.shields.io/packagist/v/arokettu/composer-viz.svg?style=flat-square
+   :target:     https://packagist.org/packages/arokettu/composer-viz
 .. |GitHub|     image:: https://img.shields.io/badge/get%20on-GitHub-informational.svg?style=flat-square&logo=github
    :target:     https://github.com/arokettu/composer-viz
 .. |GitLab|     image:: https://img.shields.io/badge/get%20on-GitLab-informational.svg?style=flat-square&logo=gitlab
