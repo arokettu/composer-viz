@@ -32,11 +32,11 @@
     },
     "autoload": {
         "psr-4": {
-            "SandFox\\ComposerViz\\": "src"
+            "Arokettu\\ComposerViz\\": "src"
         }
     },
     "extra": {
-        "class": "SandFox\\ComposerViz\\VizPlugin"
+        "class": "Arokettu\\ComposerViz\\VizPlugin"
     },
     "require": {
         "php": ">= 5.5 < 9",

@@ -1,6 +1,6 @@
 <?php
 
-namespace SandFox\ComposerViz;
+namespace Arokettu\ComposerViz;
 
 use Composer\Plugin\Capability\CommandProvider;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace SandFox\ComposerViz\Helpers;
+namespace Arokettu\ComposerViz\Helpers;
 
 /**
  * from symfony/polyfill-php80 backported to PHP 5.x

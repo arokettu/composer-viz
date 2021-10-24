@@ -1,10 +1,10 @@
 <?php
 
-namespace SandFox\ComposerViz;
+namespace Arokettu\ComposerViz;
 
+use Arokettu\ComposerViz\Engine\GraphBuilder;
 use Composer\Command\BaseCommand;
 use Graphp\GraphViz\GraphViz;
-use SandFox\ComposerViz\Engine\GraphBuilder;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;

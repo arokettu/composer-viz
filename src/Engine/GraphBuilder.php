@@ -1,13 +1,13 @@
 <?php
 
-namespace SandFox\ComposerViz\Engine;
+namespace Arokettu\ComposerViz\Engine;
 
+use Arokettu\ComposerViz\Helpers\StringHelper;
 use Composer\Composer;
 use Composer\Package\Loader\ArrayLoader;
 use Composer\Package\PackageInterface;
 use Fhaculty\Graph\Graph;
 use Fhaculty\Graph\Vertex;
-use SandFox\ComposerViz\Helpers\StringHelper;
 
 /**
  * @internal
