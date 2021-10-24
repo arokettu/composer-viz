@@ -1,5 +1,5 @@
 {
-    "name": "sandfoxme/composer-viz",
+    "name": "arokettu/composer-viz",
     "type": "composer-plugin",
     "description": "Generate a GraphViz representation of the dependency graph",
     "keywords": [
