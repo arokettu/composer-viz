@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.2.4
+
+*Oct 24, 2021*
+
+* Renamed package to arokettu/composer-viz 
+
 ## 2.2.3
 
 *Oct 12, 2021*
