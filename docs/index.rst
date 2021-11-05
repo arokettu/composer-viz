@@ -38,9 +38,9 @@ Usage
 Examples
 ========
 
-Running composer-viz 2.2.0 for itself: ``composer viz --output=composer-viz-2.2.0.svg``
+Running composer-viz 2.3.0 for itself: ``composer viz --output=composer-viz-2.3.0.svg``
 
-.. figure:: images/composer-viz-2.2.0.svg
+.. figure:: images/composer-viz-2.3.0.svg
    :width: 100%
    :alt: selfie
 
@@ -60,9 +60,9 @@ Vertices:
 
 Edges:
 
-* Solid: regular dependency
-* Dashed: development dependency
-* Dotted: 'provided by' relationship
+* Black: regular dependency
+* Grey: development dependency
+* Red: 'provided by' relationship
 
 GraphViz
 ========
