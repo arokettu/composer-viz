@@ -6,6 +6,7 @@ use Arokettu\ComposerViz\Helpers\StringHelper;
 use Composer\Composer;
 use Composer\Package\Loader\ArrayLoader;
 use Composer\Package\PackageInterface;
+use Fhaculty\Graph\Edge\Directed as Edge;
 use Fhaculty\Graph\Graph;
 use Fhaculty\Graph\Vertex;
 
@@ -14,24 +15,38 @@ use Fhaculty\Graph\Vertex;
  */
 final class GraphBuilder
 {
-    const COLOR_DEFAULT     = '#ffffff';
-    const COLOR_ROOT        = '#eeffee';
-    const COLOR_DEV         = '#eeeeee';
-    const COLOR_PLATFORM    = '#eeeeff';
-    const COLOR_PROVIDED    = '#ffeeee';
+    const VERTEX_TYPE_DEFAULT   = 'vertex_default';
+    const VERTEX_TYPE_ROOT      = 'vertex_root';
+    const VERTEX_TYPE_DEV       = 'vertex_dev';
+    const VERTEX_TYPE_PLATFORM  = 'vertex_platform';
+    const VERTEX_TYPE_PROVIDED  = 'vertex_provided';
 
-    const COLOR_EDGE_DEFAULT    = '#000000';
-    const COLOR_EDGE_DEV        = '#999999';
-    const COLOR_EDGE_PROVIDED   = '#cc9999';
+    private static $vertexColors = [
+        self::VERTEX_TYPE_DEFAULT     => '#ffffff',
+        self::VERTEX_TYPE_ROOT        => '#eeffee',
+        self::VERTEX_TYPE_DEV         => '#eeeeee',
+        self::VERTEX_TYPE_PLATFORM    => '#eeeeff',
+        self::VERTEX_TYPE_PROVIDED    => '#ffeeee',
+    ];
 
-    const NODE_ROOT = 1001;
-    const NODE_DEP = 1002;
-    const NODE_DEV = 1003;
+    const EDGE_TYPE_DEFAULT     = 'edge_default';
+    const EDGE_TYPE_DEV         = 'edge_dev';
+    const EDGE_TYPE_PROVIDED    = 'edge_provided';
 
-    const PACKAGE_REGULAR = 2001;
-    const PACKAGE_PHP = 2002;
-    const PACKAGE_EXTENSION = 2003;
-    const PACKAGE_COMPOSER = 2004;
+    private static $edgeColors = [
+        self::EDGE_TYPE_DEFAULT     => '#000000',
+        self::EDGE_TYPE_DEV         => '#999999',
+        self::EDGE_TYPE_PROVIDED    => '#cc9999',
+    ];
+
+    const NODE_ROOT = 'root_node';
+    const NODE_DEP  = 'dep_node';
+    const NODE_DEV  = 'dev_node';
+
+    const PACKAGE_REGULAR   = 'regular_package';
+    const PACKAGE_PHP       = 'php_package';
+    const PACKAGE_EXTENSION = 'ext_package';
+    const PACKAGE_COMPOSER  = 'composer_package';
 
     /** @var Composer */
     private $composer;
@@ -85,7 +100,7 @@ final class GraphBuilder
 
         foreach ($this->phpVertices as $vertex) {
             $php = $this->getVertex('php', self::NODE_DEP);
-            $this->buildEdge($vertex, $php, '', self::COLOR_EDGE_PROVIDED);
+            $this->buildEdge($vertex, $php, '', self::EDGE_TYPE_PROVIDED);
         }
 
         foreach ($this->provides as list($package, $provided, $version)) {
@@ -95,8 +110,8 @@ final class GraphBuilder
 
             $packageVertex = $this->getVertex($package, self::NODE_DEP);
             $providedVertex = $this->getVertex($provided, self::NODE_DEP);
-            $providedVertex->setAttribute('graphviz.fillcolor', self::COLOR_PROVIDED);
-            $this->buildEdge($providedVertex, $packageVertex, $version, self::COLOR_EDGE_PROVIDED);
+            $this->applyVertexStyle($providedVertex, self::VERTEX_TYPE_PROVIDED);
+            $this->buildEdge($providedVertex, $packageVertex, $version, self::EDGE_TYPE_PROVIDED);
         }
 
         return $this->graph;
@@ -134,7 +149,7 @@ final class GraphBuilder
                 $rootVertex,
                 $packageVertex,
                 $constraint,
-                $nodeType === self::NODE_DEV ? self::COLOR_EDGE_DEV : self::COLOR_EDGE_DEFAULT
+                $nodeType === self::NODE_DEV ? self::EDGE_TYPE_DEV : self::EDGE_TYPE_DEFAULT
             );
         }
 
@@ -157,7 +172,7 @@ final class GraphBuilder
                 $constraint = $link->getPrettyConstraint();
 
                 $packageVertex = $this->getVertex($target, self::NODE_DEV);
-                $this->buildEdge($rootVertex, $packageVertex, $constraint, self::COLOR_EDGE_DEV);
+                $this->buildEdge($rootVertex, $packageVertex, $constraint, self::EDGE_TYPE_DEV);
             }
         }
     }
@@ -169,25 +184,23 @@ final class GraphBuilder
             $packageType = $this->packageType($name);
 
             if ($nodeType === self::NODE_ROOT) {
-                $color = self::COLOR_ROOT;
+                $vertexType = self::VERTEX_TYPE_ROOT;
             } else {
                 switch ($packageType) {
                     case self::PACKAGE_EXTENSION:
                     case self::PACKAGE_COMPOSER:
                     case self::PACKAGE_PHP:
-                        $color = self::COLOR_PLATFORM;
+                        $vertexType = self::VERTEX_TYPE_PLATFORM;
                         break;
                     case self::PACKAGE_REGULAR:
-                        $color = $nodeType === self::NODE_DEV ? self::COLOR_DEV : self::COLOR_DEFAULT;
+                        $vertexType = $nodeType === self::NODE_DEV ? self::VERTEX_TYPE_DEV : self::VERTEX_TYPE_DEFAULT;
                         break;
                     default:
                         throw new \LogicException('Unknown package type');
                 }
             }
 
-            $vertex->setAttribute('graphviz.shape', 'box');
-            $vertex->setAttribute('graphviz.style', 'rounded, filled');
-            $vertex->setAttribute('graphviz.fillcolor', $color);
+            $this->applyVertexStyle($vertex, $vertexType);
 
             $this->vertices[$name] = $vertex;
 
@@ -200,7 +213,7 @@ final class GraphBuilder
         return $this->vertices[$name];
     }
 
-    private function buildEdge(Vertex $from, Vertex $to, $version, $color)
+    private function buildEdge(Vertex $from, Vertex $to, $version, $edgeType)
     {
         $edge = $from->createEdgeTo($to);
 
@@ -208,7 +221,7 @@ final class GraphBuilder
             $edge->setAttribute('graphviz.label', $version);
         }
 
-        $edge->setAttribute('graphviz.color', $color);
+        $this->applyEdgeStyle($edge, $edgeType);
     }
 
     private function processLockFile($dataComposerLock, $dev)
@@ -263,5 +276,18 @@ final class GraphBuilder
         }
 
         throw new \RuntimeException("Unable to determine package type of {$name}");
+    }
+
+    private function applyVertexStyle(Vertex $vertex, $vertexType)
+    {
+        $vertex->setAttribute('graphviz.shape', 'box');
+        $vertex->setAttribute('graphviz.style', 'rounded, filled');
+        $vertex->setAttribute('graphviz.fillcolor', self::$vertexColors[$vertexType]);
+    }
+
+    private function applyEdgeStyle(Edge $edge, $edgeType)
+    {
+        $edge->setAttribute('graphviz.color', self::$edgeColors[$edgeType]);
+        $edge->setAttribute('graphviz.fontcolor', self::$edgeColors[$edgeType]);
     }
 }
