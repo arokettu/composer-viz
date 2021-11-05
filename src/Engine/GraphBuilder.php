@@ -35,13 +35,19 @@ final class GraphBuilder
 
     private static $edgeColors = [
         self::EDGE_TYPE_DEFAULT     => '#000000',
-        self::EDGE_TYPE_DEV         => '#999999',
-        self::EDGE_TYPE_PROVIDED    => '#cc9999',
+        self::EDGE_TYPE_DEV         => '#777777',
+        self::EDGE_TYPE_PROVIDED    => '#cc7777',
     ];
 
     const NODE_ROOT = 'root_node';
     const NODE_DEP  = 'dep_node';
     const NODE_DEV  = 'dev_node';
+
+    private static $nodeBorderColors = [
+        self::NODE_ROOT => '#000000',
+        self::NODE_DEP  => '#000000',
+        self::NODE_DEV  => '#777777',
+    ];
 
     const PACKAGE_REGULAR   = 'regular_package';
     const PACKAGE_PHP       = 'php_package';
@@ -110,7 +116,7 @@ final class GraphBuilder
 
             $packageVertex = $this->getVertex($package, self::NODE_DEP);
             $providedVertex = $this->getVertex($provided, self::NODE_DEP);
-            $this->applyVertexStyle($providedVertex, self::VERTEX_TYPE_PROVIDED);
+            $this->applyVertexStyle($providedVertex, self::VERTEX_TYPE_PROVIDED, self::NODE_DEP);
             $this->buildEdge($providedVertex, $packageVertex, $version, self::EDGE_TYPE_PROVIDED);
         }
 
@@ -200,7 +206,7 @@ final class GraphBuilder
                 }
             }
 
-            $this->applyVertexStyle($vertex, $vertexType);
+            $this->applyVertexStyle($vertex, $vertexType, $nodeType);
 
             $this->vertices[$name] = $vertex;
 
@@ -278,11 +284,13 @@ final class GraphBuilder
         throw new \RuntimeException("Unable to determine package type of {$name}");
     }
 
-    private function applyVertexStyle(Vertex $vertex, $vertexType)
+    private function applyVertexStyle(Vertex $vertex, $vertexType, $nodeType)
     {
         $vertex->setAttribute('graphviz.shape', 'box');
         $vertex->setAttribute('graphviz.style', 'rounded, filled');
         $vertex->setAttribute('graphviz.fillcolor', self::$vertexColors[$vertexType]);
+        $vertex->setAttribute('graphviz.color', self::$nodeBorderColors[$nodeType]);
+        $vertex->setAttribute('graphviz.fontcolor', self::$nodeBorderColors[$nodeType]);
     }
 
     private function applyEdgeStyle(Edge $edge, $edgeType)
