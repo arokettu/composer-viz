@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.3.0
+
+*Nov 5, 2021*
+
+* Edge styles replaced with edge colors
+* Graphs use collapsed edges now
+
 ## 2.2.4
 
 *Oct 24, 2021*
