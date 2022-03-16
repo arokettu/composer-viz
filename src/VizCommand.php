@@ -65,6 +65,8 @@ final class VizCommand extends BaseCommand
         } else {
             $viz->display($graph);
         }
+
+        return 0;
     }
 
     private function detectFormat($filename, $format)
