@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.3.1
+
+*Mar 16, 2022*
+
+* Fixed crash on composer 2.3
+
 ## 2.3.0
 
 *Nov 5, 2021*
