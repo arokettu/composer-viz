@@ -71,7 +71,7 @@ final class VizCommand extends BaseCommand
         return 0;
     }
 
-    private function detectFormat(string $filename, ?string $format): string
+    private function detectFormat(?string $filename, ?string $format): string
     {
         if ($format) {
             return $format;
