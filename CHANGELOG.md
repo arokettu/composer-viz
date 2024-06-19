@@ -2,6 +2,14 @@
 
 ## 2.x
 
+### 2.4.0
+
+*Jun 19, 2024*
+
+* Dropped support for PHP 5.5-7.1
+* Dropped support for Composer 1.x
+* Fixed crash on Symfony 7
+
 ### 2.3.1
 
 *Mar 16, 2022*
