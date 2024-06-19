@@ -48,8 +48,7 @@
     },
     "require-dev": {
         "composer/composer": "^2.0",
-        "dealerdirect/phpcodesniffer-composer-installer": "*",
-        "phpcompatibility/php-compatibility": "*",
+        "sandfox.dev/code-standard": "^1.2024.03.15",
         "squizlabs/php_codesniffer": "*"
     }
 }
