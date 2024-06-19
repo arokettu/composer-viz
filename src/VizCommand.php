@@ -1,8 +1,8 @@
 <?php
 
-namespace Arokettu\ComposerViz;
+namespace Arokettu\Composer\Viz;
 
-use Arokettu\ComposerViz\Engine\GraphBuilder;
+use Arokettu\Composer\Viz\Engine\GraphBuilder;
 use Composer\Command\BaseCommand;
 use Graphp\GraphViz\GraphViz;
 use Symfony\Component\Console\Input\InputInterface;

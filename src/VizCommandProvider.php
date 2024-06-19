@@ -1,6 +1,6 @@
 <?php
 
-namespace Arokettu\ComposerViz;
+namespace Arokettu\Composer\Viz;
 
 use Composer\Plugin\Capability\CommandProvider;
 

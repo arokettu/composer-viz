@@ -1,6 +1,6 @@
 <?php
 
-namespace Arokettu\ComposerViz\Helpers;
+namespace Arokettu\Composer\Viz\Helpers;
 
 /**
  * from symfony/polyfill-php80 backported to PHP 5.x

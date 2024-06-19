@@ -1,8 +1,8 @@
 <?php
 
-namespace Arokettu\ComposerViz\Engine;
+namespace Arokettu\Composer\Viz\Engine;
 
-use Arokettu\ComposerViz\Helpers\StringHelper;
+use Arokettu\Composer\Viz\Helpers\StringHelper;
 use Composer\Composer;
 use Composer\Package\Loader\ArrayLoader;
 use Composer\Package\PackageInterface;

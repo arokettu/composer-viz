@@ -35,11 +35,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Arokettu\\ComposerViz\\": "src"
+            "Arokettu\\Composer\\Viz\\": "src"
         }
     },
     "extra": {
-        "class": "Arokettu\\ComposerViz\\VizPlugin"
+        "class": "Arokettu\\Composer\\Viz\\VizPlugin"
     },
     "require": {
         "php": ">= 5.5 < 9",
