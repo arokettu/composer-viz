@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Arokettu\Composer\Viz;
 
 use Arokettu\Composer\Viz\Engine\GraphBuilder;
@@ -14,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class VizCommand extends BaseCommand
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('viz');
         $this->setDescription('Generates a GraphViz representation of the dependency graph.');
@@ -32,7 +34,7 @@ final class VizCommand extends BaseCommand
         $this->addOption('no-versions', null, InputOption::VALUE_NONE, '--no-pkg-versions and --no-dep-versions');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $noDev  = $input->getOption('no-dev');
 
@@ -69,7 +71,7 @@ final class VizCommand extends BaseCommand
         return 0;
     }
 
-    private function detectFormat($filename, $format)
+    private function detectFormat(string $filename, ?string $format): string
     {
         if ($format) {
             return $format;

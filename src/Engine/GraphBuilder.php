@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Arokettu\Composer\Viz\Engine;
 
-use Arokettu\Composer\Viz\Helpers\StringHelper;
 use Composer\Composer;
 use Composer\Package\Loader\ArrayLoader;
 use Composer\Package\PackageInterface;
@@ -15,13 +16,13 @@ use Fhaculty\Graph\Vertex;
  */
 final class GraphBuilder
 {
-    const VERTEX_TYPE_DEFAULT   = 'vertex_default';
-    const VERTEX_TYPE_ROOT      = 'vertex_root';
-    const VERTEX_TYPE_DEV       = 'vertex_dev';
-    const VERTEX_TYPE_PLATFORM  = 'vertex_platform';
-    const VERTEX_TYPE_PROVIDED  = 'vertex_provided';
+    private const VERTEX_TYPE_DEFAULT   = 'vertex_default';
+    private const VERTEX_TYPE_ROOT      = 'vertex_root';
+    private const VERTEX_TYPE_DEV       = 'vertex_dev';
+    private const VERTEX_TYPE_PLATFORM  = 'vertex_platform';
+    private const VERTEX_TYPE_PROVIDED  = 'vertex_provided';
 
-    private static $vertexColors = [
+    private const VERTEX_COLORS = [
         self::VERTEX_TYPE_DEFAULT     => '#ffffff',
         self::VERTEX_TYPE_ROOT        => '#eeffee',
         self::VERTEX_TYPE_DEV         => '#eeeeee',
@@ -29,30 +30,30 @@ final class GraphBuilder
         self::VERTEX_TYPE_PROVIDED    => '#ffeeee',
     ];
 
-    const EDGE_TYPE_DEFAULT     = 'edge_default';
-    const EDGE_TYPE_DEV         = 'edge_dev';
-    const EDGE_TYPE_PROVIDED    = 'edge_provided';
+    private const EDGE_TYPE_DEFAULT     = 'edge_default';
+    private const EDGE_TYPE_DEV         = 'edge_dev';
+    private const EDGE_TYPE_PROVIDED    = 'edge_provided';
 
-    private static $edgeColors = [
+    private const EDGE_COLORS = [
         self::EDGE_TYPE_DEFAULT     => '#000000',
         self::EDGE_TYPE_DEV         => '#777777',
         self::EDGE_TYPE_PROVIDED    => '#cc7777',
     ];
 
-    const NODE_ROOT = 'root_node';
-    const NODE_DEP  = 'dep_node';
-    const NODE_DEV  = 'dev_node';
+    private const NODE_ROOT = 'root_node';
+    private const NODE_DEP  = 'dep_node';
+    private const NODE_DEV  = 'dev_node';
 
-    private static $nodeBorderColors = [
+    private const NODE_BORDER_COLORS = [
         self::NODE_ROOT => '#000000',
         self::NODE_DEP  => '#000000',
         self::NODE_DEV  => '#777777',
     ];
 
-    const PACKAGE_REGULAR   = 'regular_package';
-    const PACKAGE_PHP       = 'php_package';
-    const PACKAGE_EXTENSION = 'ext_package';
-    const PACKAGE_COMPOSER  = 'composer_package';
+    private const PACKAGE_REGULAR   = 'regular_package';
+    private const PACKAGE_PHP       = 'php_package';
+    private const PACKAGE_EXTENSION = 'ext_package';
+    private const PACKAGE_COMPOSER  = 'composer_package';
 
     /** @var Composer */
     private $composer;
@@ -74,8 +75,14 @@ final class GraphBuilder
     private $noVertexVersions;
     private $noEdgeVersions;
 
-    public function __construct(Composer $composer, $noDev, $noExt, $noPHP, $noVertexVersions, $noEdgeVersions)
-    {
+    public function __construct(
+        Composer $composer,
+        bool $noDev,
+        bool $noExt,
+        bool $noPHP,
+        bool $noVertexVersions,
+        bool $noEdgeVersions
+    ) {
         $this->noDev = $noDev;
         $this->noExt = $noExt;
         $this->noPHP = $noPHP;
@@ -86,10 +93,7 @@ final class GraphBuilder
         $this->arrayLoader = new ArrayLoader();
     }
 
-    /**
-     * @return Graph
-     */
-    public function build()
+    public function build(): Graph
     {
         if ($this->graph) {
             return $this->graph;
@@ -123,12 +127,7 @@ final class GraphBuilder
         return $this->graph;
     }
 
-    /**
-     * @param PackageInterface $package
-     * @param bool $nodeType       node type
-     * @param bool $includeDev  include development dependencies
-     */
-    private function processPackageData(PackageInterface $package, $nodeType, $includeDev)
+    private function processPackageData(PackageInterface $package, string $nodeType, bool $includeDev): void
     {
         $rootPackage = $package->getName();
 
@@ -183,7 +182,7 @@ final class GraphBuilder
         }
     }
 
-    private function getVertex($name, $nodeType)
+    private function getVertex(string $name, string $nodeType): Vertex
     {
         if (!isset($this->vertices[$name])) {
             $vertex = $this->graph->createVertex($name);
@@ -219,7 +218,7 @@ final class GraphBuilder
         return $this->vertices[$name];
     }
 
-    private function buildEdge(Vertex $from, Vertex $to, $version, $edgeType)
+    private function buildEdge(Vertex $from, Vertex $to, string $version, string $edgeType): void
     {
         $edge = $from->createEdgeTo($to);
 
@@ -230,7 +229,7 @@ final class GraphBuilder
         $this->applyEdgeStyle($edge, $edgeType);
     }
 
-    private function processLockFile($dataComposerLock, $dev)
+    private function processLockFile(array $dataComposerLock, bool $dev): void
     {
         $this->processPackageList($dataComposerLock['packages'], self::NODE_DEP);
 
@@ -239,14 +238,14 @@ final class GraphBuilder
         }
     }
 
-    private function processPackageList(array $packages, $nodeType)
+    private function processPackageList(array $packages, string $nodeType): void
     {
         foreach ($packages as $package) {
             $this->processPackageData($this->arrayLoader->load($package), $nodeType, false);
         }
     }
 
-    private function ignorePackage($name)
+    private function ignorePackage(string $name): bool
     {
         $type = $this->packageType($name);
 
@@ -263,39 +262,39 @@ final class GraphBuilder
         return false;
     }
 
-    private function packageType($name)
+    private function packageType(string $name): string
     {
-        if (StringHelper::strContains($name, '/') || $name === '__root__') {
+        if (str_contains($name, '/') || $name === '__root__') {
             return self::PACKAGE_REGULAR;
         }
 
-        if (StringHelper::strStartsWith($name, 'ext-') || StringHelper::strStartsWith($name, 'lib-')) {
+        if (str_starts_with($name, 'ext-') || str_starts_with($name, 'lib-')) {
             return self::PACKAGE_EXTENSION;
         }
 
-        if (StringHelper::strStartsWith($name, 'php')) {
+        if (str_starts_with($name, 'php')) {
             return self::PACKAGE_PHP;
         }
 
-        if (StringHelper::strStartsWith($name, 'composer-')) {
+        if (str_starts_with($name, 'composer-')) {
             return self::PACKAGE_COMPOSER;
         }
 
         throw new \RuntimeException("Unable to determine package type of {$name}");
     }
 
-    private function applyVertexStyle(Vertex $vertex, $vertexType, $nodeType)
+    private function applyVertexStyle(Vertex $vertex, string $vertexType, string $nodeType): void
     {
         $vertex->setAttribute('graphviz.shape', 'box');
         $vertex->setAttribute('graphviz.style', 'rounded, filled');
-        $vertex->setAttribute('graphviz.fillcolor', self::$vertexColors[$vertexType]);
-        $vertex->setAttribute('graphviz.color', self::$nodeBorderColors[$nodeType]);
-        $vertex->setAttribute('graphviz.fontcolor', self::$nodeBorderColors[$nodeType]);
+        $vertex->setAttribute('graphviz.fillcolor', self::VERTEX_COLORS[$vertexType]);
+        $vertex->setAttribute('graphviz.color', self::NODE_BORDER_COLORS[$nodeType]);
+        $vertex->setAttribute('graphviz.fontcolor', self::NODE_BORDER_COLORS[$nodeType]);
     }
 
-    private function applyEdgeStyle(Edge $edge, $edgeType)
+    private function applyEdgeStyle(Edge $edge, string $edgeType): void
     {
-        $edge->setAttribute('graphviz.color', self::$edgeColors[$edgeType]);
-        $edge->setAttribute('graphviz.fontcolor', self::$edgeColors[$edgeType]);
+        $edge->setAttribute('graphviz.color', self::EDGE_COLORS[$edgeType]);
+        $edge->setAttribute('graphviz.fontcolor', self::EDGE_COLORS[$edgeType]);
     }
 }
