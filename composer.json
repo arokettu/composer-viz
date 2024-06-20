@@ -45,7 +45,7 @@
         "php": ">= 7.2 < 9",
         "composer-plugin-api": "^2.0",
         "graphp/graphviz": "~0.2.0",
-        "symfony/polyfill-php80": "^1.29"
+        "symfony/polyfill-php80": "^1.16"
     },
     "require-dev": {
         "composer/composer": "^2.0",
