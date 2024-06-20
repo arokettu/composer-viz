@@ -38,6 +38,11 @@
             "Arokettu\\Composer\\Viz\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Arokettu\\Composer\\Viz\\Tests\\": "tests"
+        }
+    },
     "extra": {
         "class": "Arokettu\\Composer\\Viz\\VizPlugin"
     },
@@ -49,6 +54,7 @@
     },
     "require-dev": {
         "composer/composer": "^2.0",
+        "phpunit/phpunit": "^8.5 | ^9.6",
         "sandfox.dev/code-standard": "^1.2024.03.15",
         "squizlabs/php_codesniffer": "*"
     }
