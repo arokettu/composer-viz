@@ -1,0 +1,12 @@
+digraph {
+  graph [concentrate="true"]
+  "package/name" [shape="box" style="rounded, filled" fillcolor="#eeffee" color="#000000" fontcolor="#000000" label="package/name: dev-master"]
+  "php" [shape="box" style="rounded, filled" fillcolor="#eeeeff" color="#000000" fontcolor="#000000"]
+  "psr/log" [shape="box" style="rounded, filled" fillcolor="#ffffff" color="#000000" fontcolor="#000000" label="psr/log: 1.1.4"]
+  "psr/http-message" [shape="box" style="rounded, filled" fillcolor="#eeeeee" color="#777777" fontcolor="#777777" label="psr/http-message: 1.1"]
+  "package/name" -> "php" [label="&gt;= 7.0" color="#000000" fontcolor="#000000"]
+  "package/name" -> "psr/log" [label="^1.0" color="#000000" fontcolor="#000000"]
+  "package/name" -> "psr/http-message" [label="^1.1" color="#777777" fontcolor="#777777"]
+  "psr/log" -> "php" [label="&gt;=5.3.0" color="#000000" fontcolor="#000000"]
+  "psr/http-message" -> "php" [label="^7.2 || ^8.0" color="#777777" fontcolor="#777777"]
+}

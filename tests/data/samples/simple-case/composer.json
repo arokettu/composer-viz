@@ -1,0 +1,10 @@
+{
+    "name": "package/name",
+    "require": {
+        "php": ">= 7.0",
+        "psr/log": "^1.0"
+    },
+    "require-dev": {
+        "psr/http-message": "^1.1"
+    }
+}
