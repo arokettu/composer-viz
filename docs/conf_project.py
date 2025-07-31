@@ -1,3 +1,4 @@
 project = 'Composer Viz'
 repo = 'composer-viz'
-packagist = False
+packagist = 'arokettu/composer-viz'
+npmjs = False
